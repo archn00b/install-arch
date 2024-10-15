@@ -1,7 +1,7 @@
 
 Arch_Disk="$1"
 
-fdisk "$Arch_disk" <<EOF
+fdisk "$Arch_Disk" <<EOF
 g
 n
 1
