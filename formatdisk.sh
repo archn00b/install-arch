@@ -29,29 +29,3 @@ EOF
 mkfs.fat -F 32 "${Arch_Disk}1"
 mkswap "${Arch_Disk}2"
 mkfs.ext4 "${Arch_Disk}3"
-
-# MOUNTING THE FILE SYSTEM
-mount "${Arch_Disk}3" /mnt
-mount "${Arch_Disk}1" /mnt/boot
-swapon "${Arch_Disk}2"
-
-# INSTAL ESSENTIAL PACKAGES
-pacstrap -K /mnt base linux linux-firmware
-
-# CONFIGURE THE SYSTEM
-genfstab -U /mnt >> /mnt/etc/fstab
-
-# CHANGE ROOT INTO THE NEW SYSTEM
-arch-chroot /mnt pacman -S vim
-
-
-
-
-
-
-
-
- 
-
-
-
