@@ -36,17 +36,15 @@ mount "${Arch_Disk}1" /mnt/boot
 swapon "${Arch_Disk}2"
 
 # INSTAL ESSENTIAL PACKAGES
-pacstrap -K /mnt base linux linux-firmaware
+pacstrap -K /mnt base linux linux-firmware
 
 # CONFIGURE THE SYSTEM
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # CHANGE ROOT INTO THE NEW SYSTEM
-arch-chroot /mnt /bin/bash
-chroot /mnt /bin/bash
-pacman -S vim
+arch-chroot /mnt pacman -S vim
 
-# pacman -S --noconfirm xf86-video-amdgpu
+
 
 
 
