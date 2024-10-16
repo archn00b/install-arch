@@ -42,15 +42,18 @@ pacstrap -K /mnt base linux linux-firmaware
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # CHANGE ROOT INTO THE NEW SYSTEM
-arch-chroot /mnt
-/bin/ln -sf /usr/share/zoneinfo/Europe/Zurich /etc/localtime
-hwclock --systohc
-/bin/sed -i '178s/.//' /etc/locale.gen
-locale-gen
-/bin/echo "LANG=en_US.UTF-8" >> /etc/locale.conf
-/bin/echo "arch" >> /etc/hostname
-/bin/echo "127.0.0.1 localhost" >> /etc/hosts
-/bin/echo "::1       localhost" >> /etc/hosts
-/bin/echo "127.0.1.1 arch.localdomain arch" >> /etc/hosts
-/bin/echo root:123 | chpasswd
+arch-chroot /mnt /bin/bash
+chroot /mnt /bin/bash
+pacman -S vim
+
+# pacman -S --noconfirm xf86-video-amdgpu
+
+
+
+
+
+
+ 
+
+
 
