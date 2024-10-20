@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-Arch_Disk="$1"
-
 # FORMATING DISK USING FDISK
 format_disk() {
     fdisk "$Arch_Disk" <<EOF

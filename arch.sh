@@ -29,11 +29,10 @@ if ! grep -q "Arch_Root" /proc/mounts; then
      source format_disk.sh
      mount "${Arch_Disk}3" /mnt
      mount --mkdir "${Arch_Disk}1" /mnt/boot
-     swapon "{$Arch_Disk}2"
+     swapon "${Arch_Disk}2"
 fi
 
 # shellcheck disable=SC1091
-source format_disk.sh
 
 # INSTALLING ESSENTIAL PKG'S
 pacstrap -K /mnt base linux linux-firmware

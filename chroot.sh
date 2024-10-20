@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-Arch_Root="$1"
 
+# shellcheck disable=SC2154
 arch-chroot "$Arch_Root" /bin/bash <<EOF
 ln -sf /usr/share/zoneinfo/Europe/Zurich /etc/localtime
 hwclock --systohc
@@ -12,7 +12,7 @@ echo "arch" >> /etc/hostname
 echo "127.0.0.1 localhost" >> /etc/hosts
 echo "::1       localhost" >> /etc/hosts
 echo "127.0.1.1 arch.localdomain arch" >> /etc/hosts
-echo root:ilovecoding | chpasswd
+echo root:123 | chpasswd
 
 pacman -S grub efibootmgr networkmanager network-manager-applet  
 
@@ -24,13 +24,10 @@ systemctl enable NetworkManager
 
 
 useradd -m archnoob
-echo archnoob:ilovecoding | chpasswd
+echo archnoob:123 | chpasswd
 
 echo "archnoob ALL=(ALL) ALL" >> /etc/sudoers.d/archnoob
 
 printf "\e[1;32mDone! Type exit, umount -a and reboot.\e[0m"
 exit
 EOF
-
-umount -a "$Arch_Root" 
-reboot  
