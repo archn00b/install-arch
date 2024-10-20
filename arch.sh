@@ -21,11 +21,12 @@ set -euo pipefail
 
 # SETTING VARIABLES
 export Arch_Root=/mnt 
-export Arch_Disk=/dev/vda
+export Arch_Disk=/dev/sda
 
 # CHECKING IF ARCH IS MOUNTED
 if ! grep -q "Arch_Root" /proc/mounts; then
-     unmount -a "$Arch_Root"
+     # shellcheck disable=SC1091
+     source format_disk.sh
      mount "$Arch_Disk" /mnt
      mount --mkdir "$Arch_Disk/1" /mnt/boot
      swapon "$Arch_Disk/2"
