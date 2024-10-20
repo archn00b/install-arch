@@ -1,38 +1,48 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
+##################################################################################################################
+# Author 	: ArchN00B
+# Website   : https://www.github.com/archn00b
+######################################################################################
+#
+#   ITS ALL IN YOUR HANDS. READ & OBSERVE SCRIPT ESPECIALLY COMMENTS
+#
+######################################################################################
+#tput setaf 0 = black 
+#tput setaf 1 = red 
+#tput setaf 2 = green
+#tput setaf 3 = yellow 
+#tput setaf 4 = dark blue 
+#tput setaf 5 = purple
+#tput setaf 6 = cyan 
+#tput setaf 7 = gray 
+#tput setaf 8 = light blue
+######################################################################################
 
 # SETTING VARIABLES
-export Arch=/mnt
+export Arch_Root=/mnt 
 export Arch_Disk=/dev/vda
 
 # CHECKING IF ARCH IS MOUNTED
 if ! grep -q "Arch_Root" /proc/mounts; then
-     source formatdisk.sh "$Arch_Disk"
-     # MOUNTING THE FILE SYSTEM
-     mount "${Arch_Disk}3" $Arch
-     mount "${Arch_Disk}1" $Arch/boot
-     swapon "${Arch_Disk}2"
+     unmount -a "$Arch_Root"
+     mount "$Arch_Disk" /mnt
+     mount --mkdir "$Arch_Disk/1" /mnt/boot
+     swapon "$Arch_Disk/2"
 fi
 
-# INSTAL ESSENTIAL PACKAGES
+# shellcheck disable=SC1091
+source format_disk.sh
+
+# INSTALLING ESSENTIAL PKG'S
 pacstrap -K /mnt base linux linux-firmware
 
-# CONFIGURE THE SYSTEM
+# GENERATE FSTAB
 genfstab -U /mnt >> /mnt/etc/fstab
 
-# Mount Kernel Virtual File Systems
-mount -t proc proc $Arch/proc
-mount -t sysfs sysfs $Arch/sys
-mount -t devtmpfs devtmpfs $Arch/dev
-mount -t tmpfs tmpfs $Arch/dev/shm
-mount -t devpts devpts $Arch/dev/pts
+# ENTERING ARCH-CHROOT
+# shellcheck disable=SC1091
+source chroot.sh
 
-# Copy /etc/hosts
-/bin/cp -f /etc/hosts $Arch/etc/
 
-# Copy /etc/resolv.conf 
-/bin/cp -f /etc/resolv.conf $Arch/etc/resolv.conf
 
-# Link /etc/mtab
-chroot $Arch rm /etc/mtab 2> /dev/null 
-chroot $Arch ln -s /proc/mounts /etc/mtab
-echo "Inside of chroot"
