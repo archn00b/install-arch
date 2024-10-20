@@ -2,7 +2,7 @@
 
 # FORMATING DISK USING FDISK
 format_disk() {
-    fdisk "$Arch_Disk" <<EOF
+    fdisk /dev/sda <<EOF
 g
 n
 1
@@ -28,9 +28,9 @@ EOF
 
 # FORMAT THE FILE SYSTEM
 echo " Formating the file system"
-mkfs.fat -F 32 "${Arch_Disk}1"
-mkswap "${Arch_Disk}2"
-mkfs.ext4 "${Arch_Disk}3"
+mkfs.fat -F 32 /dev/sda1
+mkswap /dev/sda2
+mkfs.ext4 /dev/sda3
 }
 format_disk
 
