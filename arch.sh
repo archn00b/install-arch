@@ -44,5 +44,9 @@ genfstab -U /mnt >> /mnt/etc/fstab
 # shellcheck disable=SC1091
 source chroot.sh
 
+# DONE WITH CHROOT
+umount -R /mnt
+reboot
+
 
 
