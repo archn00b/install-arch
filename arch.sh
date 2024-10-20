@@ -45,8 +45,6 @@ genfstab -U /mnt >> /mnt/etc/fstab
 source chroot.sh
 
 # DONE WITH CHROOT
-umount -R /mnt
-reboot
 
 
 
