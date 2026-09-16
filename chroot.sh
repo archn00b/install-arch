@@ -136,7 +136,7 @@ sleep 2
 # Create User
 # ------------------------------------------
 
-echo "Creating user archnoob..."
+echo "Creating user archn00b..."
 
 if ! id archn00b &>/dev/null; then
     useradd -m archn00b
@@ -155,7 +155,7 @@ echo "Configuring sudo access..."
 
 mkdir -p /etc/sudoers.d
 
-echo "archnoob ALL=(ALL) ALL" > /etc/sudoers.d/archn00b
+echo "archn00b ALL=(ALL) ALL" > /etc/sudoers.d/archn00b
 
 chmod 440 /etc/sudoers.d/archn00b
 
