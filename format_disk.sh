@@ -2,6 +2,8 @@
 
 # FORMATING DISK USING FDISK
 format_disk() {
+    echo "Formatting /dev/sda..."
+
     fdisk /dev/sda <<EOF
 g
 n
@@ -10,10 +12,11 @@ n
 +1G
 t
 1
+1
 n
 2
 
-+8G
++4G
 t
 2
 19
@@ -21,16 +24,17 @@ n
 3
 
 
-p
 w
-q
 EOF
 
-# FORMAT THE FILE SYSTEM
-echo " Formating the file system"
-mkfs.fat -F 32 /dev/sda1
-mkswap /dev/sda2
-mkfs.ext4 /dev/sda3
-}
-format_disk
+    # FORMAT THE FILE SYSTEM
+    echo "Formatting the file systems..."
 
+    mkfs.fat -F 32 /dev/sda1
+    mkswap /dev/sda2
+    mkfs.ext4 /dev/sda3
+
+    echo "Disk formatting complete."
+}
+
+format_disk

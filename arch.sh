@@ -35,7 +35,7 @@ fi
 # shellcheck disable=SC1091
 
 # INSTALLING ESSENTIAL PKG'S
-pacstrap -K /mnt base linux linux-firmware
+pacstrap -K /mnt base linux linux-firmware vim nano
 
 # GENERATE FSTAB
 genfstab -U /mnt >> /mnt/etc/fstab
