@@ -113,6 +113,7 @@ echo "Installing packages..."
 echo
 
 pacman -S --noconfirm \
+    sudo \
     grub \
     efibootmgr \
     networkmanager \
