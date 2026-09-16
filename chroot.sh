@@ -1,54 +1,28 @@
+```bash
 #!/usr/bin/env bash
-
-# ==========================================
-# ARCH LINUX CHROOT CONFIGURATION
-# ==========================================
 
 arch-chroot /mnt /bin/bash <<EOF
 
-# ------------------------------------------
 # Timezone
-# ------------------------------------------
-
 ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
-
 sleep 1
 
 hwclock --systohc
-
 sleep 1
 
-
-# ------------------------------------------
 # Locale
-# ------------------------------------------
-
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
-
-sleep 1
-
 locale-gen
-
 sleep 1
 
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
-
 sleep 1
 
-
-# ------------------------------------------
 # Hostname
-# ------------------------------------------
-
 echo "arch" > /etc/hostname
-
 sleep 1
 
-
-# ------------------------------------------
 # Hosts
-# ------------------------------------------
-
 cat > /etc/hosts <<HOSTS
 127.0.0.1   localhost
 ::1         localhost
@@ -57,65 +31,37 @@ HOSTS
 
 sleep 1
 
-
-# ------------------------------------------
-# Root Password
-# ------------------------------------------
-
+# Root password
 echo "root:123" | chpasswd
-
 sleep 2
 
-
-# ------------------------------------------
-# Install Packages
-# ------------------------------------------
-
+# Install packages
 pacman -S --noconfirm \
     grub \
     efibootmgr \
     networkmanager \
-    network-manager-applet \
 
 sleep 3
 
-
-# ------------------------------------------
-# Enable Services
-# ------------------------------------------
-
+# Enable services
 systemctl enable NetworkManager
+systemctl enable sddm
+sleep 2
 
-sleep 1
-
-# ------------------------------------------
-# Create User
-# ------------------------------------------
-
+# Create user
 useradd -m archnoob
-
 sleep 1
 
-echo "archnoob:123" | chpasswd
-
+echo "archn00b:123" | chpasswd
 sleep 1
 
-
-# ------------------------------------------
-# Give User Sudo Access
-# ------------------------------------------
-
-echo "archnoob ALL=(ALL) ALL" > /etc/sudoers.d/archnoob
-
+# Sudo access
+echo "archn00b ALL=(ALL) ALL" > /etc/sudoers.d/archn00b
 chmod 440 /etc/sudoers.d/archnoob
 
 sleep 1
 
-
-# ------------------------------------------
 # Install GRUB
-# ------------------------------------------
-
 grub-install \
     --target=x86_64-efi \
     --efi-directory=/boot \
@@ -123,27 +69,20 @@ grub-install \
 
 sleep 3
 
-
-# ------------------------------------------
-# Generate GRUB Configuration
-# ------------------------------------------
-
+# Generate GRUB configuration
 grub-mkconfig -o /boot/grub/grub.cfg
 
 sleep 3
 
-
-# ------------------------------------------
-# Finished
-# ------------------------------------------
-
-printf '\\e[1;32m\\n==========================================\\n'
-printf '        Arch Linux Setup Complete!\\n'
-printf '==========================================\\n'
-printf '\\n'
-printf 'Type: exit\\n'
-printf 'Then: umount -R /mnt\\n'
-printf 'Then: reboot\\n'
-printf '\\n\\e[0m'
+echo
+echo "=========================================="
+echo "        Arch Linux Setup Complete!"
+echo "=========================================="
+echo
+echo "Type: exit"
+echo "Then: umount -R /mnt"
+echo "Then: reboot"
+echo
 
 EOF
+```
